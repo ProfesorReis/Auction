@@ -66,12 +66,12 @@ contract Auction {
 
         bids[msg.sender] = currentBid;  // mapping'i çağırarak şu anki bid'le fonksiyonu kullanan kişiyi birlieştirdik?
 
-        // currentBid en yüksek bid'den düşük
+        // currentBid en yüksek bid'den yüksek olması gerekiyor.
         if(currentBid <= bids[highestBidder]) {
-            highestBindingBid = min(currentBid + bindIncrement, bids[highestBindingBid]);
+            highestBindingBid = min(currentBid + bindIncrement, bids[highestBidder]);
         } else {
             highestBindingBid = min(currentBid, bids[highestBidder] + bindIncrement);
-            highestBidder = payable(msg.sender)
+            highestBidder = payable(msg.sender);
         }
 
 
