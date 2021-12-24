@@ -115,5 +115,8 @@ contract Auction {
         }
 
         recipient.transfer(value);  // Fonksiyonu kullanan kişiye parasını yolladık?
+
+        // Eğer fonksiyonu kullanan adresi bids[] mapping'inden çıkartmassak tekrar tekrar bu fonksinoyu kullanabilir ve kontrattaki bütün parayı sömürebilir.
+        bids[recipient] = 0;    // Bu fonksiyonu kullanan kişi artık bidder olarak algılanmicak ve bu fonksiyonu tekrar çağıramayacak.
     }
 }
