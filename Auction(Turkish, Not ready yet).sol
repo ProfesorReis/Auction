@@ -19,15 +19,15 @@ contract Auction {
     address payable public highestBidder;
 
     mapping(address => uint) public bids;
-    uint bindIncrement;
+    uint bidIncrement;
 
     constructor() {
         owner = payable(msg.sender);
-        auctionState = State.Started;
+        auctionState = State.Running;
         startBlock = block.number; // "block.number" şu anki bloğun numarasını alıyor bu da ilk blok olmuş oluyor.
         endBlock = startBlock + 40320; // Her bir blok için ortalama 15 saniye geçiyormuş böylelikle bitiş tarihi hesaplandı
         ipfsHash = "";  // "I'm initializing it to an empty string" ???
-        bindIncrement = 100; // Bid arttırmak için 100 wei ödenmesi gerekiyor.
+        bidIncrement = 100000000000000000; // Bid arttırmak için 0.1 ether ödenmesi gerekiyor.
     }
     
     // "owner" ın yapamayacağı şeyleri belirlemek için tanımladık.
@@ -79,9 +79,9 @@ contract Auction {
 
         // currentBid en yüksek bid'den yüksek olması gerekiyor.
         if(currentBid <= bids[highestBidder]) {
-            highestBindingBid = min(currentBid + bindIncrement, bids[highestBidder]);
+            highestBindingBid = min(currentBid + bidIncrement, bids[highestBidder]);
         } else {
-            highestBindingBid = min(currentBid, bids[highestBidder] + bindIncrement);
+            highestBindingBid = min(currentBid, bids[highestBidder] + bidIncrement);
             highestBidder = payable(msg.sender);
         }
 
